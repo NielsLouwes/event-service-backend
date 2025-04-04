@@ -1,6 +1,6 @@
 // @deno-types="npm:@types/express@4"
 import express, { NextFunction, Request, Response } from "express";
-import { DataLayerEventType } from "./types";
+import { DataLayerEventType } from "./types/types.ts";
 
 // GOAL: Store events, send back failure or success so FE event buffer service can process
 const app = express();
@@ -11,8 +11,6 @@ app.use(express.json());
 const events: DataLayerEventType[] = [];
 
 app.get("/", (_req, res) => {
-  console.log("res", res);
-  console.log("_req", _req);
   res.status(200).send("Welcome to the event backend service!");
 });
 
@@ -24,6 +22,7 @@ app.post("/events", (_req, res) => {
   try {
     // Log the incoming event for debugging
     console.log("Received event:", _req.body);
+    console.log("response", res);
 
     events.push(_req.body);
 
